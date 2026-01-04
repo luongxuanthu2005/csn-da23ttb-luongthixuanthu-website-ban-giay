@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tài khoản - XT Store</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body { background-color: #f8f9fa; font-family: Verdana, Geneva, Tahoma, sans-serif; }
+    .login-card { border: none; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .btn-primary { background-color: #0d6efd; border: none; padding: 12px; border-radius: 10px; font-weight: bold; }
+    .form-control { border-radius: 8px; padding: 12px; border: 1px solid #dee2e6; }
+    .form-control:focus { box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15); }
+    .bg-navy { background-color: #ffffff; border-bottom: 1px solid #eee; }
+  </style>
+</head>
+<body>
+
+  <header class="bg-navy py-3 mb-5 shadow-sm">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a href="Trang_chủ.html" class="text-decoration-none text-dark d-flex align-items-center">
+        <img src="logo.png" alt="XT Store" style="max-height: 60px;" class="me-2">
+      </a>
+      <a href="Trang_chủ.html" class="btn btn-outline-dark rounded-pill px-4">
+        <i class="bi bi-house-door"></i> Về trang chủ
+      </a>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-5 col-lg-4">
+        <div class="card login-card p-2">
+          <div class="card-body p-4">
+            <div class="text-center mb-4">
+              <i class="bi bi-person-circle text-primary" style="font-size: 3rem;"></i>
+              <h2 class="fw-bold mt-2">Đăng nhập</h2>
+              <p class="text-muted small">Chào mừng bạn quay trở lại với XT Store</p>
+            </div>
+
+            <form onsubmit="return loginUser(event)">
+              <div class="mb-3">
+                <label class="form-label fw-bold small">Email của bạn</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-end-0"><i class="bi bi-envelope text-muted"></i></span>
+                  <input type="email" id="email" class="form-control bg-light border-start-0" placeholder="email@vi-du.com" required>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label fw-bold small">Mật khẩu</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock text-muted"></i></span>
+                  <input type="password" id="password" class="form-control bg-light border-start-0" placeholder="••••••••" required>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100 mb-3 shadow-sm">
+                ĐĂNG NHẬP NGAY
+              </button>
+            </form>
+
+            <div class="text-center mt-4">
+              <p class="text-muted small mb-1">Bạn chưa có tài khoản?</p>
+              <a href="dangki.html" class="text-success fw-bold text-decoration-none">
+                <i class="bi bi-pencil-square"></i> Tạo tài khoản mới ngay
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-4 text-muted small">
+          &copy; 2024 XT Store - Hệ thống giày chính hãng
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function loginUser(event) {
+      event.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      // Lấy dữ liệu người dùng từ localStorage
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      // Kiểm tra đăng nhập
+      if (user && email === user.email && password === user.password) {
+        // Lưu trạng thái đã đăng nhập vào session (tùy chọn)
+        sessionStorage.setItem("isLoggedIn", "true");
+        sessionStorage.setItem("userName", user.fullname);
+
+        alert("✅ Đăng nhập thành công! Xin chào " + user.fullname);
+        window.location.href = "Trang_chủ.html"; 
+      } else {
+        alert("❌ Sai email hoặc mật khẩu! Vui lòng thử lại.");
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+        <title>XT Store</title>
+        <link rel="stylesheet" href="css.css">
+    </head>
+   <body style="background-color: rgb(242, 236, 241);">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <div>
+            <header class="bg-navy text-dark py-2 fs-5" style="font-family:Verdana, Geneva, Tahoma, sans-serif">
+    <div class="p-2 d-flex align-items-center justify-content-between">
+
+      <!-- Logo -->
+      <div style="padding: 0px 50px;">
+        <a href="Trang_chủ.html" class="text-dark text-decoration-none">
+          <div class="d-flex align-items-center">
+            <img src="logo.png" alt="XT Store" class="img-fluid" style="max-height: 70px;">
+          </div>
+        </a>
+      </div>
+
+      <!-- Thanh tìm kiếm -->
+      <form class="d-flex flex-grow-1 mx-auto" style="max-width:600px; position:relative;">
+  <div class="input-group">
+    <input id="searchInput" 
+           class="form-control rounded-start-pill border-secondary-subtle ps-4" 
+           type="search" 
+           placeholder="Bạn đang tìm gì..." 
+           style="background-color: #ffffff; color: #333; height: 45px;">
+    
+    <button class="btn btn-dark rounded-end-pill px-4" type="submit" style="height: 45px;">
+      <i class="bi bi-search me-2"></i>
+      <span class="fw-bold">Tìm kiếm</span>
+    </button>
+  </div>
+
+  <div id="suggestions" class="list-group position-absolute w-100 mt-2 shadow-lg rounded-3" 
+       style="z-index:1050; top: 100%; border: none; overflow: hidden;"></div>
+</form>
+
+<script>
+  // Danh sách sản phẩm với link chi tiết
+  const products = [
+    // Nike
+    {name: "Nike Air Zoom", url: "thongtin_giay_nike/NikeAirZoom.html"},
+    {name: "Nike Court Lite", url: "thongtin_giay_nike/NikeCourtLite.html"},
+    {name: "Nike Air Max", url: "thongtin_giay_nike/NikeAirMax.html"},
+
+    // Adidas
+    {name: "Adidas Ultraboost", url: "thongtin_giay_adidas/Ultraboost.html"},
+    {name: "Adidas Superstar", url: "thongtin_giay_adidas/Superstar.html"},
+
+    // Puma
+    {name: "Puma Suede Classic", url: "thongtin_giay_puma/Suede.html"},
+    {name: "Puma RS-X", url: "thongtin_giay_puma/RSX.html"},
+
+    // Giày khác - Biti's
+    {name: "Biti's Hunter Street", url: "thongtin_giay_khac/HunterStreet.html"},
+    {name: "Biti's Hunter X", url: "thongtin_giay_khac/HunterX.html"},
+    {name: "Biti's Hunter Core", url: "thongtin_giay_khac/HunterCore.html"},
+    {name: "Biti's Hunter Festive", url: "thongtin_giay_khac/HunterFestive.html"},
+
+    // Giày khác - MLB
+    {name: "MLB Big Ball Chunky", url: "thongtin_giay_khac/BigBallChunky.html"},
+    {name: "MLB Playball Origin", url: "thongtin_giay_khac/PlayballOrigin.html"},
+    {name: "MLB Chunky Liner", url: "thongtin_giay_khac/ChunkyLiner.html"},
+    {name: "MLB Jogger", url: "thongtin_giay_khac/Jogger.html"},
+
+    // Phụ kiện
+    {name: "Tất Nike chính hãng", url: "thongtin_phukien/TatNike.html"},
+    {name: "Tất Adidas thể thao", url: "thongtin_phukien/TatAdidas.html"},
+    {name: "Dây giày nhiều màu", url: "thongtin_phukien/DayGiay.html"},
+    {name: "Balo thể thao XT", url: "thongtin_phukien/Balo.html"},
+    {name: "Nón Nike", url: "thongtin_phukien/NikeCap.html"},
+    {name: "Nón Adidas", url: "thongtin_phukien/AdidasCap.html"},
+    {name: "Bình nước thể thao", url: "thongtin_phukien/Bottle.html"},
+    {name: "Túi thể thao XT", url: "thongtin_phukien/Bag.html"}
+  ];
+
+  const input = document.getElementById("searchInput");
+  const suggestionsBox = document.getElementById("suggestions");
+
+  input.addEventListener("input", function() {
+    const keyword = this.value.toLowerCase();
+    suggestionsBox.innerHTML = "";
+
+    if (keyword.length === 0) return;
+
+    const matches = products.filter(p => p.name.toLowerCase().includes(keyword));
+
+    if (matches.length > 0) {
+      matches.forEach(m => {
+        const item = document.createElement("a");
+        item.classList.add("list-group-item", "list-group-item-action");
+        item.textContent = m.name;
+        item.href = m.url; // link trực tiếp tới trang sản phẩm
+        suggestionsBox.appendChild(item);
+      });
+    }
+  });
+
+  // Ẩn gợi ý khi click ra ngoài
+  document.addEventListener("click", function(e){
+    if (!input.contains(e.target)) {
+      suggestionsBox.innerHTML = "";
+    }
+  });
+  </script>
+<div class="d-flex align-items-center">
+          <div class="me-4">
+            <a href="giohang.html" class="text-dark text-decoration-none d-flex align-items-center position-relative header-icon-link">
+              <div class="position-relative">
+                <i class="bi bi-cart3 fs-4 me-2"></i>
+              </div>
+              <span class="d-none d-lg-inline">Giỏ hàng</span>
+            </a>
+          </div>
+
+          <div class="me-4">
+            <a href="taikhoan.html" class="text-dark text-decoration-none d-flex align-items-center header-icon-link">
+              <i class="bi bi-person fs-4 me-2"></i>
+              <span class="d-none d-lg-inline">Tài khoản</span>
+            </a>
+          </div>
+
+          <div class="d-flex align-items-center text-dark bg-light px-3 py-1 rounded-pill border shadow-sm">
+            <i class="bi bi-telephone-outbound-fill me-2 fs-5 text-success"></i>
+            <div style="line-height: 1.2;">
+              <div style="font-size: 0.7rem; color: #666; text-transform: uppercase; font-weight: bold;">Hotline</div>
+              <strong style="font-size: 0.95rem; color: #d32f2f;">0344.776.793</strong>
+            </div>
+          </div>
+
+        </div>
+
+        <style>
+          .header-icon-link {
+            transition: all 0.3s ease;
+          }
+          .header-icon-link:hover {
+            color: #0d6efd !important; /* Đổi màu xanh khi hover */
+            transform: translateY(-2px); /* Nhảy nhẹ lên trên */
+          }
+        </style>
+          </div>
+<div class="container-fluid mt-4">
+  <div class="row px-3">
+    
+    <aside class="col-md-3">
+      <div class="list-group shadow-sm border-0">
+        <div class="list-group-item bg-dark text-white fw-bold text-center py-3 border-0">
+          DANH MỤC SẢN PHẨM
+        </div>
+        <a href="Trang_chủ.html" class="list-group-item list-group-item-action py-3 border-bottom">
+          <i class="bi bi-house-door me-2"></i> Home
+        </a>
+        <a href="giay_nike.html" class="list-group-item list-group-item-action py-3 border-bottom">
+           Giày Nike
+        </a>
+        <a href="giay_adidas.html" class="list-group-item list-group-item-action py-3 border-bottom">
+           Giày Adidas
+        </a>
+        <a href="giay_puma.html" class="list-group-item list-group-item-action py-3 border-bottom">
+           Giày Puma
+        </a>
+        <a href="giay_khac.html" class="list-group-item list-group-item-action py-3 border-bottom">
+            Giày khác
+        </a>
+        <a href="phu_kien.html" class="list-group-item list-group-item-action py-3 border-bottom">
+            Phụ Kiện
+        </a>
+        <a href="lien_he.html" class="list-group-item list-group-item-action py-3 active" style="background-color: #0d6efd; border-color: #0d6efd;">
+          <i class="bi bi-telephone me-2"></i> Liên hệ
+        </a>
+      </div>
+    </aside>
+
+    <main class="col-md-9">
+      <div class="card shadow-sm border-0 rounded-3 p-4 bg-white">
+        <h3 class="mb-4 fw-bold" style="color: #0d6efd; border-left: 5px solid #0d6efd; padding-left: 15px;">📞 LIÊN HỆ VỚI XT STORE</h3>
+
+        <div class="row">
+          <div class="col-md-5 border-end pe-4">
+            <h5 class="fw-bold mb-4 text-secondary">Thông tin chi tiết</h5>
+            
+            <div class="d-flex mb-3">
+              <i class="bi bi-geo-alt-fill text-danger fs-4 me-3"></i>
+              <div>
+                <strong>Địa chỉ:</strong><br>
+                <small class="text-muted">Số 99, đường Nguyễn Trung Trực, phường Trà Vinh, tỉnh Vĩnh Long</small>
+              </div>
+            </div>
+
+            <div class="d-flex mb-3">
+              <i class="bi bi-telephone-fill text-success fs-4 me-3"></i>
+              <div>
+                <strong>Hotline:</strong><br>
+                <small class="text-muted">0344 776 793</small>
+              </div>
+            </div>
+
+            <div class="d-flex mb-3">
+              <i class="bi bi-envelope-fill text-primary fs-4 me-3"></i>
+              <div>
+                <strong>Email:</strong><br>
+                <small class="text-muted">cskhxtstore@gmail.com.vn</small>
+              </div>
+            </div>
+
+            <div class="d-flex mb-3">
+              <i class="bi bi-clock-fill text-warning fs-4 me-3"></i>
+              <div>
+                <strong>Giờ làm việc:</strong><br>
+                <small class="text-muted">8h00 - 21h00 (Thứ 2 - Chủ Nhật)</small>
+              </div>
+            </div>
+              <div class="mt-4 rounded-3 overflow-hidden shadow-sm" style="height: 250px; border: 1px solid #ddd;">
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7859.53292777657!2d106.33433451108394!3d9.953378565293917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1svi!2s!4v1766892867046!5m2!1svi!2s" 
+                  width="100%" 
+                  height="100%" 
+                  style="border:0;" 
+                  allowfullscreen="" 
+                  loading="lazy" 
+                  referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+              </div>
+          </div>
+
+          <div class="col-md-7 ps-4">
+            <h5 class="fw-bold mb-4 text-secondary">Gửi tin nhắn cho chúng tôi</h5>
+            <form action="#" method="POST">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="name" class="form-label fw-semibold">Họ và tên</label>
+                  <input type="text" class="form-control bg-light border-0" id="name" placeholder="Nguyễn Văn A" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="phone" class="form-label fw-semibold">Số điện thoại</label>
+                  <input type="tel" class="form-control bg-light border-0" id="phone" placeholder="0123.456.789">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label fw-semibold">Email</label>
+                <input type="email" class="form-control bg-light border-0" id="email" placeholder="name@example.com" required>
+              </div>
+              <div class="mb-3">
+                <label for="message" class="form-label fw-semibold">Nội dung liên hệ</label>
+                <textarea class="form-control bg-light border-0" id="message" rows="5" placeholder="Bạn cần chúng tôi hỗ trợ điều gì?" required></textarea>
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg shadow-sm">
+                  <i class="bi bi-send-fill me-2"></i> Gửi tin nhắn ngay
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

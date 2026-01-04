@@ -1,0 +1,261 @@
+/* file: styles/header.css */
+
+/* Tổng thể */
+:root {
+  --primary: #0d6efd;
+  --text-dark: #222;
+  --text-muted: #6c757d;
+  --bg-light: #ffffff;
+  --bg-hover: #f2f4f7;
+  --border: #e5e7eb;
+}
+
+body {
+  background-color: #f0f2f5;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: var(--text-dark);
+}
+
+/* Header cố định trên cùng */
+header.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1030; /* cao hơn carousel/footer mặc định */
+  background-color: var(--bg-light);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Hàng đầu tiên: logo + menu + search + icons */
+.header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px;
+}
+
+/* Logo */
+.header-logo img {
+  max-height: 60px;
+}
+
+/* Menu ngang */
+.header-menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-menu .menu-btn {
+  background-color: #fff;
+  color: var(--text-dark);
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.05s ease;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.header-menu .menu-btn:hover {
+  background-color: var(--bg-hover);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+
+.header-menu .menu-btn:active {
+  transform: translateY(1px);
+}
+
+/* Search */
+.header-search {
+  position: relative;
+  max-width: 480px;
+  flex: 1 1 380px;
+  display: flex;
+  gap: 8px;
+}
+
+.header-search .search-input {
+  border-radius: 999px;
+  padding: 10px 14px;
+}
+
+.header-search .search-btn {
+  border-radius: 999px;
+  padding: 10px 18px;
+}
+
+/* Gợi ý tìm kiếm */
+.search-suggestions {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.search-suggestions .suggestion-item {
+  display: block;
+  padding: 10px 12px;
+  color: var(--text-dark);
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.search-suggestions .suggestion-item:hover {
+  background-color: var(--bg-hover);
+}
+
+/* Nhóm icon (giỏ hàng, tài khoản, hotline) */
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.header-icons a {
+  color: var(--text-dark);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.header-icons .hotline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-dark);
+}
+
+/* Footer nền trắng chữ đen */
+.site-footer {
+  background-color: #fff;
+  color: var(--text-dark);
+  border-top: 1px solid var(--border);
+  padding: 24px 16px;
+}
+
+.site-footer .footer-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.site-footer .footer-note {
+  border-top: 1px solid var(--border);
+  margin-top: 16px;
+  padding-top: 12px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Ảnh banner/carousel */
+.hero-carousel img,
+.hero-grid img {
+  height: 500px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+/* Grid banner cũ (nếu dùng) */
+.hero-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 992px) {
+  .hero-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #000000; /* Nền footer màu xám nhạt để phù hợp với nền trắng */
+    color: rgb(255, 255, 255); /* Chữ đen để nổi trên nền trắng */
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+a.btn {
+  list-style: none;
+  text-decoration: none;
+}
+.btn-primary {
+  background: linear-gradient(90deg, #007bff, #0056b3);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, #0056b3, #003f7f);
+  transform: scale(1.05);
+}
+.navbar .btn {
+  transition: all 0.3s ease;
+}
+
+.navbar .btn:hover {
+  background-color: #0d6efd; /* xanh Bootstrap */
+  color: #fff;              /* chữ trắng */
+  transform: scale(1.05);   /* hơi phóng to */
+}
+
+.list-group-item {
+  font-weight: 500;
+}
+
+.list-group-item:hover {
+  background-color: #b0d2f4;
+  color: #000;
+}
+
+.list-group-item.active {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+.btn-navy {
+  background-color: #0b2545;   /* xanh navy */
+  color: #ffffff;
+  border: none;
+  padding: 12px 28px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+}
+
+.btn-navy:hover {
+  background-color: #081d36;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+body {
+  font-family: 'Quicksand', sans-serif;
+  background-color: #f0f2f5;
+  color: #222;
+}
+
+.menu-btn {
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.menu-btn:hover {
+  background-color: #e9ecef;
+}
+

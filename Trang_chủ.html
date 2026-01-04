@@ -1,0 +1,287 @@
+ <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+        <title>XT Store</title>
+        <link rel="stylesheet" href="css.css">
+    </head>
+    <body style="background-color: rgb(246, 240, 245);">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <div>
+            <header class="bg-navy text-dark py-2 fs-5" style="font-family:Verdana, Geneva, Tahoma, sans-serif">
+          <div class="p-2 d-flex align-items-center justify-content-between">
+
+      <!-- Logo -->
+      <div style="padding: 0px 50px;">
+        <a href="Trang_chủ.html" class="text-dark text-decoration-none">
+          <div class="d-flex align-items-center">
+            <img src="logo.png" alt="XT Store" class="img-fluid" style="max-height: 70px;">
+          </div>
+        </a>
+      </div>
+
+<form class="d-flex flex-grow-1 mx-auto" style="max-width:600px; position:relative;">
+  <div class="input-group">
+    <input id="searchInput" 
+           class="form-control rounded-start-pill border-secondary-subtle ps-4" 
+           type="search" 
+           placeholder="Bạn đang tìm gì..." 
+           style="background-color: #ffffff; color: #333; height: 45px;">
+    
+    <button class="btn btn-dark rounded-end-pill px-4" type="submit" style="height: 45px;">
+      <i class="bi bi-search me-2"></i>
+      <span class="fw-bold">Tìm kiếm</span>
+    </button>
+  </div>
+
+  <div id="suggestions" class="list-group position-absolute w-100 mt-2 shadow-lg rounded-3" 
+       style="z-index:1050; top: 100%; border: none; overflow: hidden;"></div>
+</form>
+
+<script>
+  // Danh sách đầy đủ sản phẩm dựa trên các trang bạn đã làm
+  const products = [
+    // NIKE
+    {name: "Nike Air Zoom", url: "thongtin_giay_nike/NikeAirZoom.html", type: "Giày"},
+    {name: "Nike Court Lite", url: "thongtin_giay_nike/NikeCourtLite.html", type: "Giày"},
+    {name: "Nike Air Max", url: "thongtin_giay_nike/NikeAirMax.html", type: "Giày"},
+    
+    // ADIDAS
+    {name: "Adidas Ultraboost", url: "thongtin_giay_adidas/Ultraboost.html", type: "Giày"},
+    {name: "Adidas Superstar", url: "thongtin_giay_adidas/Superstar.html", type: "Giày"},
+    
+    // PUMA
+    {name: "Puma Suede Classic", url: "thongtin_giay_puma/Suede.html", type: "Giày"},
+    {name: "Puma RS-X", url: "thongtin_giay_puma/RSX.html", type: "Giày"},
+    
+    // CONVERSE & VANS
+    {name: "Converse Chuck Taylor", url: "thongtin_giay_khac/Converse1.html", type: "Giày"},
+    {name: "Converse Run Star Hike", url: "thongtin_giay_khac/Converse4.html", type: "Giày"},
+    {name: "Vans Old Skool", url: "thongtin_giay_khac/Vans1.html", type: "Giày"},
+    {name: "Vans Slip-On", url: "thongtin_giay_khac/Vans2.html", type: "Giày"},
+
+    // BITIS & MLB
+    {name: "Biti's Hunter Street", url: "thongtin_giay_khac/Bitis1.html", type: "Giày"},
+    {name: "MLB Big Ball Chunky", url: "thongtin_giay_khac/MLB1.html", type: "Giày"},
+    {name: "MLB Chunky Liner", url: "thongtin_giay_khac/MLB3.html", type: "Giày"},
+
+    // PHỤ KIỆN
+    {name: "Tất Nike chính hãng", url: "thongtin_phukien/TatNike.html", type: "Phụ kiện"},
+    {name: "Balo thể thao XT", url: "thongtin_phukien/Balo.html", type: "Phụ kiện"},
+    {name: "Nón Nike Heritage", url: "thongtin_phukien/NikeCap.html", type: "Phụ kiện"},
+    {name: "Xịt vệ sinh giày Nano", url: "thongtin_phukien/XitVeSinh.html", type: "Phụ kiện"}
+  ];
+
+  const input = document.getElementById("searchInput");
+  const suggestionsBox = document.getElementById("suggestions");
+
+  input.addEventListener("input", function() {
+    const keyword = this.value.toLowerCase().trim();
+    suggestionsBox.innerHTML = "";
+
+    if (keyword.length === 0) return;
+
+    const matches = products.filter(p => p.name.toLowerCase().includes(keyword));
+
+    if (matches.length > 0) {
+      matches.slice(0, 6).forEach(m => { // Chỉ hiển thị tối đa 6 kết quả để đẹp khung
+        const item = document.createElement("a");
+        item.classList.add("list-group-item", "list-group-item-action", "d-flex", "justify-content-between", "align-items-center", "py-2");
+        item.style.borderLeft = "none";
+        item.style.borderRight = "none";
+        
+        // Cấu trúc gợi ý có thêm nhãn (Tag)
+        item.innerHTML = `
+          <span><i class="bi bi-search me-2 text-muted" style="font-size: 0.8rem;"></i>${m.name}</span>
+          <span class="badge bg-light text-dark border fw-normal" style="font-size: 0.7rem;">${m.type}</span>
+        `;
+        
+        item.href = m.url;
+        suggestionsBox.appendChild(item);
+      });
+    } else {
+      // Hiển thị thông báo khi không tìm thấy
+      const noResult = document.createElement("div");
+      noResult.classList.add("list-group-item", "text-muted", "small");
+      noResult.textContent = "Không tìm thấy sản phẩm phù hợp...";
+      suggestionsBox.appendChild(noResult);
+    }
+  });
+
+  // Ẩn gợi ý khi click ra ngoài hoặc nhấn Esc
+  document.addEventListener("click", function(e){
+    if (!input.contains(e.target) && !suggestionsBox.contains(e.target)) {
+      suggestionsBox.innerHTML = "";
+    }
+  });
+
+  input.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") {
+      suggestionsBox.innerHTML = "";
+    }
+  });
+</script>
+      <div class="d-flex align-items-center">
+          <div class="me-4">
+            <a href="giohang.html" class="text-dark text-decoration-none d-flex align-items-center position-relative header-icon-link">
+              <div class="position-relative">
+                <i class="bi bi-cart3 fs-4 me-2"></i>
+              </div>
+              <span class="d-none d-lg-inline">Giỏ hàng</span>
+            </a>
+          </div>
+
+          <div class="me-4">
+            <a href="taikhoan.html" class="text-dark text-decoration-none d-flex align-items-center header-icon-link">
+              <i class="bi bi-person fs-4 me-2"></i>
+              <span class="d-none d-lg-inline">Tài khoản</span>
+            </a>
+          </div>
+
+          <div class="d-flex align-items-center text-dark bg-light px-3 py-1 rounded-pill border shadow-sm">
+            <i class="bi bi-telephone-outbound-fill me-2 fs-5 text-success"></i>
+            <div style="line-height: 1.2;">
+              <div style="font-size: 0.7rem; color: #666; text-transform: uppercase; font-weight: bold;">Hotline</div>
+              <strong style="font-size: 0.95rem; color: #d32f2f;">0344.776.793</strong>
+            </div>
+          </div>
+
+        </div>
+
+        <style>
+          .header-icon-link {
+            transition: all 0.3s ease;
+          }
+          .header-icon-link:hover {
+            color: #0d6efd !important; /* Đổi màu xanh khi hover */
+            transform: translateY(-2px); /* Nhảy nhẹ lên trên */
+          }
+        </style>
+          </div>
+<div class="container-fluid mt-4">
+  <div class="row">
+    <aside class="col-md-3">
+      <div class="list-group shadow-sm">
+        <div class="list-group-item bg-dark text-white fw-bold text-center py-3">
+          DANH MỤC SẢN PHẨM
+        </div>
+        <a href="giay_nike.html" class="list-group-item list-group-item-action py-3">
+           Giày Nike
+        </a>
+        <a href="giay_adidas.html" class="list-group-item list-group-item-action py-3">
+           Giày Adidas
+        </a>
+        <a href="giay_puma.html" class="list-group-item list-group-item-action py-3">
+           Giày Puma
+        </a>
+        <a href="giay_khac.html" class="list-group-item list-group-item-action py-3">
+            Giày Khác
+        </a>
+        <a href="phu_kien.html" class="list-group-item list-group-item-action py-3">
+            Phụ Kiện
+        </a>
+        <a href="lien_he.html" class="list-group-item list-group-item-action py-3">
+          <i class="bi bi-telephone"></i> Liên hệ
+        </a>
+      </div>
+    </aside>
+
+    <main class="col-md-9">
+      <div id="shoeCarousel" class="carousel slide carousel-fade shadow rounded overflow-hidden" data-bs-ride="carousel" data-bs-interval="4000">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="ảnh/qc2.jpg" class="d-block w-100" alt="Nike Banner" style="height:485px; object-fit:cover;">
+            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-3">
+              <h3>🔥 Khuyến mãi Nike</h3>
+              <p>Giảm giá đến 50% cho giày Nike chính hãng</p>
+              <a href="giay_nike.html" class="btn btn-warning">Xem ngay</a>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="ảnh/qc3.jpg" class="d-block w-100" alt="Adidas Banner" style="height:485px; object-fit:cover;">
+            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-3">
+              <h3>⭐ Adidas Ultraboost</h3>
+              <p>Mẫu mới nhất 2025 tại XT Store</p>
+              <a href="giay_adidas.html" class="btn btn-primary">Khám phá</a>
+            </div>
+          </div>
+          </div>
+        
+        <button class="carousel-control-prev" type="button" data-bs-target="#shoeCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#shoeCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+    </main>
+
+  </div>
+</div>
+
+ <footer class="bg-white text-dark mt-5 pt-5 pb-3 border-top shadow-sm">
+  <div class="container">
+    <div class="row g-4" style="font-size:14px; line-height: 1.6;">
+      <div class="col-md-3">
+        <h6 class="fw-bold mb-3 text-uppercase">Thông tin cửa hàng</h6>
+        <p class="text-secondary">
+          <i class="bi bi-shop me-2 text-primary"></i><strong>XT Store</strong> - Hệ thống chuyên cung cấp giày thể thao chính hãng: Nike, Adidas, Puma...
+        </p>
+        <p class="text-secondary">
+          <i class="bi bi-geo-alt-fill me-2 text-danger"></i>Số 99, đường Nguyễn Trung Trực, phường Trà Vinh, tỉnh Vĩnh Long.
+        </p>
+        <p class="text-secondary">
+          <i class="bi bi-check-circle-fill me-2 text-success"></i>Cam kết hàng chính hãng, uy tín, chất lượng hàng đầu.
+        </p>
+      </div>
+
+      <div class="col-md-3">
+        <h6 class="fw-bold mb-3 text-uppercase">Chính sách ưu đãi</h6>
+        <ul class="list-unstyled text-secondary">
+          <li class="mb-2"><i class="bi bi-arrow-left-right me-2"></i>Đổi trả trong vòng 7 ngày nếu lỗi.</li>
+          <li class="mb-2"><i class="bi bi-shield-check me-2"></i>Bảo hành keo & chỉ trong 6 tháng.</li>
+          <li class="mb-2"><i class="bi bi-credit-card me-2"></i>Hỗ trợ trả góp lãi suất ưu đãi.</li>
+        </ul>
+      </div>
+
+      <div class="col-md-3">
+        <h6 class="fw-bold mb-3 text-uppercase">Khuyến mãi & Tin tức</h6>
+        <ul class="list-unstyled text-secondary">
+          <li class="mb-2 text-danger fw-bold"><i class="bi bi-gift me-2"></i>Giảm giá đến 30% giày chạy bộ.</li>
+          <li class="mb-2"><i class="bi bi-bag-plus me-2"></i>Mua 2 tặng 1 phụ kiện cao cấp.</li>
+          <li class="mb-2"><i class="bi bi-star me-2"></i>Top sản phẩm bán chạy tuần qua.</li>
+        </ul>
+      </div>
+
+      <div class="col-md-3">
+        <h6 class="fw-bold mb-3 text-uppercase">Thời gian mở cửa</h6>
+        <p class="text-secondary">
+          <i class="bi bi-clock me-2"></i>8:00 - 21:00 (Thứ 2 - CN)
+        </p>
+        <p class="text-secondary">
+          <i class="bi bi-chat-dots me-2 text-info"></i>Tư vấn Zalo: <strong class="text-dark">0344 776 793</strong>
+        </p>
+        <div class="mt-3">
+          <a href="#" class="text-dark me-3 fs-5"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="text-dark me-3 fs-5"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="text-dark fs-5"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+
+    </div>
+    
+    <hr class="my-4 border-secondary opacity-25">
+    
+    <div class="text-center text-secondary small">
+      © 2025 <span class="fw-bold text-dark">XT Store</span> - Hệ thống cửa hàng giày thể thao chính hãng. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

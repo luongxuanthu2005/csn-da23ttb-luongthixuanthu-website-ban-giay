@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>XT Store - Giày Khác</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background-color: rgb(242, 236, 241);">
+  <!-- Header giữ nguyên -->
+<header class="bg-navy text-dark py-2 fs-5" style="font-family:Verdana, Geneva, Tahoma, sans-serif">
+    <div class="p-2 d-flex align-items-center justify-content-between">
+
+      <!-- Logo -->
+      <div style="padding: 0px 50px;">
+        <a href="Trang_chủ.html" class="text-dark text-decoration-none">
+          <div class="d-flex align-items-center">
+            <img src="logo.png" alt="XT Store" class="img-fluid" style="max-height: 70px;">
+          </div>
+        </a>
+      </div>
+
+      <!-- Thanh tìm kiếm -->
+      <form class="d-flex flex-grow-1 mx-auto" style="max-width:600px; position:relative;">
+  <div class="input-group">
+    <input id="searchInput" 
+           class="form-control rounded-start-pill border-secondary-subtle ps-4" 
+           type="search" 
+           placeholder="Bạn đang tìm gì..." 
+           style="background-color: #ffffff; color: #333; height: 45px;">
+    
+    <button class="btn btn-dark rounded-end-pill px-4" type="submit" style="height: 45px;">
+      <i class="bi bi-search me-2"></i>
+      <span class="fw-bold">Tìm kiếm</span>
+    </button>
+  </div>
+
+  <div id="suggestions" class="list-group position-absolute w-100 mt-2 shadow-lg rounded-3" 
+       style="z-index:1050; top: 100%; border: none; overflow: hidden;"></div>
+</form>
+
+<script>
+  // Danh sách sản phẩm với link chi tiết
+  const products = [
+    // Nike
+    {name: "Nike Air Zoom", url: "thongtin_giay_nike/NikeAirZoom.html"},
+    {name: "Nike Court Lite", url: "thongtin_giay_nike/NikeCourtLite.html"},
+    {name: "Nike Air Max", url: "thongtin_giay_nike/NikeAirMax.html"},
+
+    // Adidas
+    {name: "Adidas Ultraboost", url: "thongtin_giay_adidas/Ultraboost.html"},
+    {name: "Adidas Superstar", url: "thongtin_giay_adidas/Superstar.html"},
+
+    // Puma
+    {name: "Puma Suede Classic", url: "thongtin_giay_puma/Suede.html"},
+    {name: "Puma RS-X", url: "thongtin_giay_puma/RSX.html"},
+
+    // Giày khác - Biti's
+    {name: "Biti's Hunter Street", url: "thongtin_giay_khac/HunterStreet.html"},
+    {name: "Biti's Hunter X", url: "thongtin_giay_khac/HunterX.html"},
+    {name: "Biti's Hunter Core", url: "thongtin_giay_khac/HunterCore.html"},
+    {name: "Biti's Hunter Festive", url: "thongtin_giay_khac/HunterFestive.html"},
+
+    // Giày khác - MLB
+    {name: "MLB Big Ball Chunky", url: "thongtin_giay_khac/BigBallChunky.html"},
+    {name: "MLB Playball Origin", url: "thongtin_giay_khac/PlayballOrigin.html"},
+    {name: "MLB Chunky Liner", url: "thongtin_giay_khac/ChunkyLiner.html"},
+    {name: "MLB Jogger", url: "thongtin_giay_khac/Jogger.html"},
+
+    // Phụ kiện
+    {name: "Tất Nike chính hãng", url: "thongtin_phukien/TatNike.html"},
+    {name: "Tất Adidas thể thao", url: "thongtin_phukien/TatAdidas.html"},
+    {name: "Dây giày nhiều màu", url: "thongtin_phukien/DayGiay.html"},
+    {name: "Balo thể thao XT", url: "thongtin_phukien/Balo.html"},
+    {name: "Nón Nike", url: "thongtin_phukien/NikeCap.html"},
+    {name: "Nón Adidas", url: "thongtin_phukien/AdidasCap.html"},
+    {name: "Bình nước thể thao", url: "thongtin_phukien/Bottle.html"},
+    {name: "Túi thể thao XT", url: "thongtin_phukien/Bag.html"}
+  ];
+
+  const input = document.getElementById("searchInput");
+  const suggestionsBox = document.getElementById("suggestions");
+
+  input.addEventListener("input", function() {
+    const keyword = this.value.toLowerCase();
+    suggestionsBox.innerHTML = "";
+
+    if (keyword.length === 0) return;
+
+    const matches = products.filter(p => p.name.toLowerCase().includes(keyword));
+
+    if (matches.length > 0) {
+      matches.forEach(m => {
+        const item = document.createElement("a");
+        item.classList.add("list-group-item", "list-group-item-action");
+        item.textContent = m.name;
+        item.href = m.url; // link trực tiếp tới trang sản phẩm
+        suggestionsBox.appendChild(item);
+      });
+    }
+  });
+
+  // Ẩn gợi ý khi click ra ngoài
+  document.addEventListener("click", function(e){
+    if (!input.contains(e.target)) {
+      suggestionsBox.innerHTML = "";
+    }
+  });
+  </script>
+<div class="d-flex align-items-center">
+          <div class="me-4">
+            <a href="giohang.html" class="text-dark text-decoration-none d-flex align-items-center position-relative header-icon-link">
+              <div class="position-relative">
+                <i class="bi bi-cart3 fs-4 me-2"></i>
+              </div>
+              <span class="d-none d-lg-inline">Giỏ hàng</span>
+            </a>
+          </div>
+
+          <div class="me-4">
+            <a href="taikhoan.html" class="text-dark text-decoration-none d-flex align-items-center header-icon-link">
+              <i class="bi bi-person fs-4 me-2"></i>
+              <span class="d-none d-lg-inline">Tài khoản</span>
+            </a>
+          </div>
+
+          <div class="d-flex align-items-center text-dark bg-light px-3 py-1 rounded-pill border shadow-sm">
+            <i class="bi bi-telephone-outbound-fill me-2 fs-5 text-success"></i>
+            <div style="line-height: 1.2;">
+              <div style="font-size: 0.7rem; color: #666; text-transform: uppercase; font-weight: bold;">Hotline</div>
+              <strong style="font-size: 0.95rem; color: #d32f2f;">0344.776.793</strong>
+            </div>
+          </div>
+
+        </div>
+
+        <style>
+          .header-icon-link {
+            transition: all 0.3s ease;
+          }
+          .header-icon-link:hover {
+            color: #0d6efd !important; /* Đổi màu xanh khi hover */
+            transform: translateY(-2px); /* Nhảy nhẹ lên trên */
+          }
+        </style>
+          </div>
+<div class="container-fluid mt-4">
+  <div class="row px-3">
+    
+    <aside class="col-md-3">
+      <div class="list-group shadow-sm border-0">
+        <div class="list-group-item bg-dark text-white fw-bold text-center py-3 border-0">
+          DANH MỤC SẢN PHẨM
+        </div>
+        <a href="Trang_chủ.html" class="list-group-item list-group-item-action py-3 border-bottom">
+          <i class="bi bi-house-door me-2"></i> Home
+        </a>
+        <a href="giay_nike.html" class="list-group-item list-group-item-action py-3 border-bottom">
+           Giày Nike
+        </a>
+        <a href="giay_adidas.html" class="list-group-item list-group-item-action py-3 border-bottom">
+           Giày Adidas
+        </a>
+        <a href="giay_puma.html" class="list-group-item list-group-item-action py-3 border-bottom">
+           Giày Puma
+        </a>
+        <a href="giay_khac.html" class="list-group-item list-group-item-action py-3 border-bottom active" style="background-color: #6c757d; border-color: #6c757d;">
+           Giày khác
+        </a>
+        <a href="phu_kien.html" class="list-group-item list-group-item-action py-3 border-bottom">
+            Phụ Kiện
+        </a>
+        <a href="lien_he.html" class="list-group-item list-group-item-action py-3">
+          <i class="bi bi-telephone me-2"></i> Liên hệ
+        </a>
+      </div>
+    </aside>
+
+    <main class="col-md-9">
+      <div class="rounded-3 bg-white shadow-sm p-4">
+        
+        <h5 class="fw-bold mb-3 mt-2 text-uppercase" style="color: #555;">| Giày Converse</h5>
+        <div class="row g-3 mb-5">
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-2">
+              <img src="anh_giay/converse1.jpg" class="card-img-top rounded-3" style="height: 180px; object-fit: cover;">
+              <div class="card-body p-2 d-flex flex-column">
+                <p class="mb-1 fw-bold" style="font-size: 0.85rem;">Converse Chuck Taylor</p>
+                <p class="text-danger fw-bold small">1.900.000đ</p>
+                <div class="mt-auto d-grid gap-1">
+                  <a href="thongtin_giay_khac/Converse1.html" class="btn btn-outline-info btn-sm" style="font-size: 0.7rem;">Chi tiết</a>
+                  <button class="btn btn-success btn-sm" style="font-size: 0.7rem;" onclick="addToCart('Converse Chuck Taylor', 1900000, 'anh_giay/converse1.jpg')">Giỏ hàng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-2">
+              <img src="anh_giay/converse2.jpg" class="card-img-top rounded-3" style="height: 180px; object-fit: cover;">
+              <div class="card-body p-2 d-flex flex-column">
+                <p class="mb-1 fw-bold" style="font-size: 0.85rem;">Converse All Star</p>
+                <p class="text-danger fw-bold small">2.000.000đ</p>
+                <div class="mt-auto d-grid gap-1">
+                  <a href="thongtin_giay_khac/Converse2.html" class="btn btn-outline-info btn-sm" style="font-size: 0.7rem;">Chi tiết</a>
+                  <button class="btn btn-success btn-sm" style="font-size: 0.7rem;" onclick="addToCart('Converse All Star', 2000000, 'anh_giay/converse2.jpg')">Giỏ hàng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-2">
+              <img src="anh_giay/converse3.jpg" class="card-img-top rounded-3" style="height: 180px; object-fit: cover;">
+              <div class="card-body p-2 d-flex flex-column">
+                <p class="mb-1 fw-bold" style="font-size: 0.85rem;">Converse Jack Purcell</p>
+                <p class="text-danger fw-bold small">2.200.000đ</p>
+                <div class="mt-auto d-grid gap-1">
+                  <a href="thongtin_giay_khac/Converse3.html" class="btn btn-outline-info btn-sm" style="font-size: 0.7rem;">Chi tiết</a>
+                  <button class="btn btn-success btn-sm" style="font-size: 0.7rem;" onclick="addToCart('Converse Jack Purcell', 2200000, 'anh_giay/converse3.jpg')">Giỏ hàng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-2">
+              <img src="anh_giay/converse4.jpg" class="card-img-top rounded-3" style="height: 180px; object-fit: cover;">
+              <div class="card-body p-2 d-flex flex-column">
+                <p class="mb-1 fw-bold" style="font-size: 0.85rem;">Converse Run Star Hike</p>
+                <p class="text-danger fw-bold small">2.500.000đ</p>
+                <div class="mt-auto d-grid gap-1">
+                  <a href="thongtin_giay_khac/Converse4.html" class="btn btn-outline-info btn-sm" style="font-size: 0.7rem;">Chi tiết</a>
+                  <button class="btn btn-success btn-sm" style="font-size: 0.7rem;" onclick="addToCart('Converse Run Star Hike', 2500000, 'anh_giay/converse4.jpg')">Giỏ hàng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h5 class="fw-bold mb-3 text-uppercase" style="color: #555;">| Giày Vans</h5>
+        <div class="row g-3 mb-5">
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-2">
+              <img src="anh_giay/vans1.jpg" class="card-img-top rounded-3" style="height: 180px; object-fit: cover;">
+              <div class="card-body p-2 d-flex flex-column">
+                <p class="mb-1 fw-bold" style="font-size: 0.85rem;">Vans Old Skool</p>
+                <p class="text-danger fw-bold small">2.100.000đ</p>
+                <div class="mt-auto d-grid gap-1">
+                  <a href="thongtin_giay_khac/Vans1.html" class="btn btn-outline-info btn-sm" style="font-size: 0.7rem;">Chi tiết</a>
+                  <button class="btn btn-success btn-sm" style="font-size: 0.7rem;" onclick="addToCart('Vans Old Skool', 2100000, 'anh_giay/vans1.jpg')">Giỏ hàng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-2">
+              <img src="anh_giay/vans2.jpg" class="card-img-top rounded-3" style="height: 180px; object-fit: cover;">
+              <div class="card-body p-2 d-flex flex-column">
+                <p class="mb-1 fw-bold" style="font-size: 0.85rem;">Vans Slip-On</p>
+                <p class="text-danger fw-bold small">1.800.000đ</p>
+                <div class="mt-auto d-grid gap-1">
+                  <a href="thongtin_giay_khac/Vans2.html" class="btn btn-outline-info btn-sm" style="font-size: 0.7rem;">Chi tiết</a>
+                  <button class="btn btn-success btn-sm" style="font-size: 0.7rem;" onclick="addToCart('Vans Slip-On', 1800000, 'anh_giay/vans2.jpg')">Giỏ hàng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-2">
+              <img src="anh_giay/vans3.jpg" class="card-img-top rounded-3" style="height: 180px; object-fit: cover;">
+              <div class="card-body p-2 d-flex flex-column">
+                <p class="mb-1 fw-bold" style="font-size: 0.85rem;">Vans Sk8-Hi</p>
+                <p class="text-danger fw-bold small">2.300.000đ</p>
+                <div class="mt-auto d-grid gap-1">
+                  <a href="thongtin_giay_khac/Vans3.html" class="btn btn-outline-info btn-sm" style="font-size: 0.7rem;">Chi tiết</a>
+                  <button class="btn btn-success btn-sm" style="font-size: 0.7rem;" onclick="addToCart('Vans Sk8-Hi', 2300000, 'anh_giay/vans3.jpg')">Giỏ hàng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-2">
+              <img src="anh_giay/vans4.jpg" class="card-img-top rounded-3" style="height: 180px; object-fit: cover;">
+              <div class="card-body p-2 d-flex flex-column">
+                <p class="mb-1 fw-bold" style="font-size: 0.85rem;">Vans Authentic</p>
+                <p class="text-danger fw-bold small">1.700.000đ</p>
+                <div class="mt-auto d-grid gap-1">
+                  <a href="thongtin_giay_khac/Vans4.html" class="btn btn-outline-info btn-sm" style="font-size: 0.7rem;">Chi tiết</a>
+                  <button class="btn btn-success btn-sm" style="font-size: 0.7rem;" onclick="addToCart('Vans Authentic', 1700000, 'anh_giay/vans4.jpg')">Giỏ hàng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h5 class="fw-bold mb-3 text-uppercase" style="color: #555;">| Giày Biti's Hunter</h5>
+        <div class="row g-3 mb-5">
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-2">
+              <img src="anh_giay/bitis1.jpg" class="card-img-top rounded-3" style="height: 180px; object-fit: cover;">
+              <div class="card-body p-2 d-flex flex-column">
+                <p class="mb-1 fw-bold" style="font-size: 0.85rem;">Hunter Street</p>
+                <p class="text-danger fw-bold small">1.200.000đ</p>
+                <div class="mt-auto d-grid gap-1">
+                  <a href="thongtin_giay_khac/Bitis1.html" class="btn btn-outline-info btn-sm" style="font-size: 0.7rem;">Chi tiết</a>
+                  <button class="btn btn-success btn-sm" style="font-size: 0.7rem;" onclick="addToCart('Biti\'s Hunter Street', 1200000, 'anh_giay/bitis1.jpg')">Giỏ hàng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-2">
+              <img src="anh_giay/bitis2.jpg" class="card-img-top rounded-3" style="height: 180px; object-fit: cover;">
+              <div class="card-body p-2 d-flex flex-column">
+                <p class="mb-1 fw-bold" style="font-size: 0.85rem;">Hunter X</p>
+                <p class="text-danger fw-bold small">1.400.000đ</p>
+                <div class="mt-auto d-grid gap-1">
+                  <a href="thongtin_giay_khac/Bitis2.html" class="btn btn-outline-info btn-sm" style="font-size: 0.7rem;">Chi tiết</a>
+                  <button class="btn btn-success btn-sm" style="font-size: 0.7rem;" onclick="addToCart('Biti\'s Hunter X', 1400000, 'anh_giay/bitis2.jpg')">Giỏ hàng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-2">
+              <img src="anh_giay/bitis3.jpg" class="card-img-top rounded-3" style="height: 180px; object-fit: cover;">
+              <div class="card-body p-2 d-flex flex-column">
+                <p class="mb-1 fw-bold" style="font-size: 0.85rem;">Hunter Core</p>
+                <p class="text-danger fw-bold small">1.300.000đ</p>
+                <div class="mt-auto d-grid gap-1">
+                  <a href="thongtin_giay_khac/Bitis3.html" class="btn btn-outline-info btn-sm" style="font-size: 0.7rem;">Chi tiết</a>
+                  <button class="btn btn-success btn-sm" style="font-size: 0.7rem;" onclick="addToCart('Biti\'s Hunter Core', 1300000, 'anh_giay/bitis3.jpg')">Giỏ hàng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-2">
+              <img src="anh_giay/bitis4.jpg" class="card-img-top rounded-3" style="height: 180px; object-fit: cover;">
+              <div class="card-body p-2 d-flex flex-column">
+                <p class="mb-1 fw-bold" style="font-size: 0.85rem;">Hunter Festive</p>
+                <p class="text-danger fw-bold small">1.500.000đ</p>
+                <div class="mt-auto d-grid gap-1">
+                  <a href="thongtin_giay_khac/Bitis4.html" class="btn btn-outline-info btn-sm" style="font-size: 0.7rem;">Chi tiết</a>
+                  <button class="btn btn-success btn-sm" style="font-size: 0.7rem;" onclick="addToCart('Biti\'s Hunter Festive', 1500000, 'anh_giay/bitis4.jpg')">Giỏ hàng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h5 class="fw-bold mb-3 text-uppercase" style="color: #555;">| Giày MLB Korea</h5>
+        <div class="row g-3">
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-2">
+              <img src="anh_giay/mlb1.jpg" class="card-img-top rounded-3" style="height: 180px; object-fit: cover;">
+              <div class="card-body p-2 d-flex flex-column">
+                <p class="mb-1 fw-bold" style="font-size: 0.85rem;">Big Ball Chunky</p>
+                <p class="text-danger fw-bold small">2.500.000đ</p>
+                <div class="mt-auto d-grid gap-1">
+                  <a href="thongtin_giay_khac/MLB1.html" class="btn btn-outline-info btn-sm" style="font-size: 0.7rem;">Chi tiết</a>
+                  <button class="btn btn-success btn-sm" style="font-size: 0.7rem;" onclick="addToCart('MLB Big Ball Chunky', 2500000, 'anh_giay/mlb1.jpg')">Giỏ hàng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-2">
+              <img src="anh_giay/mlb2.jpg" class="card-img-top rounded-3" style="height: 180px; object-fit: cover;">
+              <div class="card-body p-2 d-flex flex-column">
+                <p class="mb-1 fw-bold" style="font-size: 0.85rem;">Playball Origin</p>
+                <p class="text-danger fw-bold small">2.300.000đ</p>
+                <div class="mt-auto d-grid gap-1">
+                  <a href="thongtin_giay_khac/MLB2.html" class="btn btn-outline-info btn-sm" style="font-size: 0.7rem;">Chi tiết</a>
+                  <button class="btn btn-success btn-sm" style="font-size: 0.7rem;" onclick="addToCart('MLB Playball Origin', 2300000, 'anh_giay/mlb2.jpg')">Giỏ hàng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-2">
+              <img src="anh_giay/mlb3.jpg" class="card-img-top rounded-3" style="height: 180px; object-fit: cover;">
+              <div class="card-body p-2 d-flex flex-column">
+                <p class="mb-1 fw-bold" style="font-size: 0.85rem;">Chunky Liner</p>
+                <p class="text-danger fw-bold small">2.400.000đ</p>
+                <div class="mt-auto d-grid gap-1">
+                  <a href="thongtin_giay_khac/MLB3.html" class="btn btn-outline-info btn-sm" style="font-size: 0.7rem;">Chi tiết</a>
+                  <button class="btn btn-success btn-sm" style="font-size: 0.7rem;" onclick="addToCart('MLB Chunky Liner', 2400000, 'anh_giay/mlb3.jpg')">Giỏ hàng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-2">
+              <img src="anh_giay/mlb4.jpg" class="card-img-top rounded-3" style="height: 180px; object-fit: cover;">
+              <div class="card-body p-2 d-flex flex-column">
+                <p class="mb-1 fw-bold" style="font-size: 0.85rem;">MLB Jogger</p>
+                <p class="text-danger fw-bold small">2.200.000đ</p>
+                <div class="mt-auto d-grid gap-1">
+                  <a href="thongtin_giay_khac/MLB4.html" class="btn btn-outline-info btn-sm" style="font-size: 0.7rem;">Chi tiết</a>
+                  <button class="btn btn-success btn-sm" style="font-size: 0.7rem;" onclick="addToCart('MLB Jogger', 2200000, 'anh_giay/mlb4.jpg')">Giỏ hàng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  function addToCart(name, price, image) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push({name, price, image, qty: 1});
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert(name + " đã được thêm vào giỏ hàng!");
+  }
+</script>
+<footer class="bg-white text-dark mt-5 pt-5 pb-3 border-top shadow-sm">
+  <div class="container">
+    <div class="row g-4" style="font-size:14px; line-height: 1.6;">
+      
+      <div class="col-md-3">
+        <h6 class="fw-bold mb-3 text-uppercase">Thông tin cửa hàng</h6>
+        <p class="text-secondary">
+          <i class="bi bi-shop me-2 text-primary"></i><strong>XT Store</strong> - Hệ thống chuyên cung cấp giày thể thao chính hãng: Nike, Adidas, Puma...
+        </p>
+        <p class="text-secondary">
+          <i class="bi bi-geo-alt-fill me-2 text-danger"></i>Số 99, đường Nguyễn Trung Trực, phường Trà Vinh, tỉnh Vĩnh Long.
+        </p>
+        <p class="text-secondary">
+          <i class="bi bi-check-circle-fill me-2 text-success"></i>Cam kết hàng chính hãng, uy tín, chất lượng hàng đầu.
+        </p>
+      </div>
+
+      <div class="col-md-3">
+        <h6 class="fw-bold mb-3 text-uppercase">Chính sách ưu đãi</h6>
+        <ul class="list-unstyled text-secondary">
+          <li class="mb-2"><i class="bi bi-arrow-left-right me-2"></i>Đổi trả trong vòng 7 ngày nếu lỗi.</li>
+          <li class="mb-2"><i class="bi bi-shield-check me-2"></i>Bảo hành keo & chỉ trong 6 tháng.</li>
+          <li class="mb-2"><i class="bi bi-credit-card me-2"></i>Hỗ trợ trả góp lãi suất ưu đãi.</li>
+        </ul>
+      </div>
+
+      <div class="col-md-3">
+        <h6 class="fw-bold mb-3 text-uppercase">Khuyến mãi & Tin tức</h6>
+        <ul class="list-unstyled text-secondary">
+          <li class="mb-2 text-danger fw-bold"><i class="bi bi-gift me-2"></i>Giảm giá đến 30% giày chạy bộ.</li>
+          <li class="mb-2"><i class="bi bi-bag-plus me-2"></i>Mua 2 tặng 1 phụ kiện cao cấp.</li>
+          <li class="mb-2"><i class="bi bi-star me-2"></i>Top sản phẩm bán chạy tuần qua.</li>
+        </ul>
+      </div>
+
+      <div class="col-md-3">
+        <h6 class="fw-bold mb-3 text-uppercase">Thời gian mở cửa</h6>
+        <p class="text-secondary">
+          <i class="bi bi-clock me-2"></i>8:00 - 21:00 (Thứ 2 - CN)
+        </p>
+        <p class="text-secondary">
+          <i class="bi bi-chat-dots me-2 text-info"></i>Tư vấn Zalo: <strong class="text-dark">0344 776 793</strong>
+        </p>
+        <div class="mt-3">
+          <a href="#" class="text-dark me-3 fs-5"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="text-dark me-3 fs-5"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="text-dark fs-5"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+
+    </div>
+    
+    <hr class="my-4 border-secondary opacity-25">
+    
+    <div class="text-center text-secondary small">
+      © 2025 <span class="fw-bold text-dark">XT Store</span> - Hệ thống cửa hàng giày thể thao chính hãng. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
